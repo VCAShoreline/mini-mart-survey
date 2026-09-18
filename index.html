@@ -1,969 +1,442 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mini Mart Stocking Preference Survey</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <!-- Inter Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d',
-              800: '#166534',
-              900: '#14532d',
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Mart Stocking Preference Survey</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  </script>
-  <style>
-    /* Custom scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-  </style>
+    </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 h-full flex flex-col justify-between font-sans">
 
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <!-- Logo & Title -->
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-            <i class="fa-solid font-bold fa-store text-lg"></i>
-          </div>
-          <div>
-            <h1 class="font-bold text-lg leading-tight text-slate-900">Associate Mini-Mart Survey</h1>
-            <p class="text-xs text-slate-500">Shape our 2026 Breakroom Market Selection</p>
-          </div>
-        </div>
-
-        <!-- Navigation / Mode Toggle -->
-        <div class="flex items-center space-x-2 sm:space-x-4">
-          <button id="view-survey-btn" onclick="switchView('survey')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center space-x-2 bg-brand-50 text-brand-700 border border-brand-200">
-            <i class="fa-solid fa-square-check"></i>
-            <span class="hidden sm:inline">Survey Vote</span>
-          </button>
-          <button id="view-admin-btn" onclick="switchView('admin')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center space-x-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent">
-            <i class="fa-solid fa-chart-pie"></i>
-            <span class="hidden sm:inline">Live Dashboard</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-    <!-- ========================================== -->
-    <!-- SECTION 1: SURVEY VOTING VIEW              -->
-    <!-- ========================================== -->
-    <div id="survey-view" class="space-y-6">
-      <!-- Banner Instructions -->
-      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
-        <div class="absolute right-0 top-0 translate-x-4 -translate-y-4 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="relative z-10 max-w-3xl">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-500/20 text-brand-300 border border-brand-500/30 mb-3">
-            <i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Takes < 3 Minutes
-          </span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Vote for your favorite stock items!</h2>
-          <p class="mt-2 text-slate-300 text-sm sm:text-base leading-relaxed">
-            We are designing our new on-site micro-market! Select <strong>up to 3 items per category</strong> that you'd love to see on the shelves. Your feedback directly shapes our initial inventory.
-          </p>
-          <div class="mt-4 flex flex-wrap gap-4 text-xs text-slate-300 border-t border-slate-700/60 pt-4">
-            <div class="flex items-center"><i class="fa-solid fa-check text-brand-400 mr-2"></i> 8 Product Categories</div>
-            <div class="flex items-center"><i class="fa-solid fa-check text-brand-400 mr-2"></i> Max 3 Choices per category</div>
-            <div class="flex items-center"><i class="fa-solid fa-check text-brand-400 mr-2"></i> Anonymous submission</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Associate Information Input -->
-      <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div class="w-full sm:w-1/2">
-          <label for="associate-id" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
-            Associate ID / Email (Optional)
-          </label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-              <i class="fa-solid fa-user text-sm"></i>
-            </span>
-            <input type="text" id="associate-id" placeholder="e.g. emp_12345 or john.doe@company.com" 
-              class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
-          </div>
-        </div>
-        <div class="w-full sm:w-1/2 flex items-center justify-between sm:justify-end gap-3 text-sm">
-          <div class="text-right">
-            <span class="text-xs text-slate-500 block">Total Selected</span>
-            <span id="total-selected-badge" class="font-bold text-slate-800 text-lg">0 <span class="text-xs font-normal text-slate-500">items</span></span>
-          </div>
-          <button onclick="openReviewModal()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-md shadow-brand-600/20 transition-all flex items-center space-x-2">
-            <span>Review & Submit</span>
-            <i class="fa-solid fa-arrow-right text-xs"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Search and Filter Bar -->
-      <div class="flex flex-col md:flex-row gap-3 items-center justify-between">
-        <!-- Category Tab Navigation (Scrollable) -->
-        <div class="w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none flex space-x-1.5 bg-slate-200/60 p-1.5 rounded-xl border border-slate-200" id="category-tabs">
-          <!-- Populated dynamically -->
-        </div>
-
-        <!-- Live Search Bar -->
-        <div class="relative w-full md:w-64">
-          <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Search all items..." 
-            class="w-full pl-9 pr-8 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-            <i class="fa-solid fa-magnifying-glass text-xs"></i>
-          </span>
-          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
-            <i class="fa-solid fa-xmark text-xs"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Categories Container -->
-      <div id="categories-container" class="space-y-6">
-        <!-- Populated dynamically -->
-      </div>
-
-      <!-- Bottom Floating Submit Bar -->
-      <div class="sticky bottom-4 z-20 bg-slate-900/90 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl border border-slate-800 flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold text-lg" id="bottom-selected-count">
-            0
-          </div>
-          <div>
-            <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Your Selection</p>
-            <p class="text-sm font-medium text-slate-200" id="bottom-selection-summary">No items chosen yet</p>
-          </div>
-        </div>
-        <button onclick="openReviewModal()" class="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold rounded-xl transition-all shadow-lg shadow-brand-500/20">
-          Review & Submit
-        </button>
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- SECTION 2: ADMIN DASHBOARD & TALLY VIEW   -->
-    <!-- ========================================== -->
-    <div id="admin-view" class="hidden space-y-6">
-      <!-- Admin Top Metrics Bar -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Total Responses</p>
-            <p class="text-3xl font-bold text-slate-900 mt-1" id="dash-total-responses">0</p>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-users"></i>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Total Votes Cast</p>
-            <p class="text-3xl font-bold text-slate-900 mt-1" id="dash-total-votes">0</p>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-check-to-slot"></i>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Active Categories</p>
-            <p class="text-3xl font-bold text-slate-900 mt-1">8</p>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-boxes-stacked"></i>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Total Offered Items</p>
-            <p class="text-3xl font-bold text-slate-900 mt-1" id="dash-total-items">0</p>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-tags"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Controls & Data Actions -->
-      <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-chart-bar text-brand-600 text-lg"></i>
-          <h2 class="font-bold text-slate-900 text-base">Live Category Tallies</h2>
-        </div>
-        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
-          <button onclick="injectSampleData()" class="px-3 py-1.5 text-xs font-semibold border border-slate-300 rounded-lg hover:bg-slate-100 text-slate-700 transition">
-            <i class="fa-solid fa-vial mr-1"></i> Add Demo Votes
-          </button>
-          <button onclick="exportCSV()" class="px-3 py-1.5 text-xs font-semibold border border-brand-300 bg-brand-50 text-brand-700 rounded-lg hover:bg-brand-100 transition">
-            <i class="fa-solid fa-file-csv mr-1"></i> Export CSV
-          </button>
-          <button onclick="confirmResetData()" class="px-3 py-1.5 text-xs font-semibold border border-red-200 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition">
-            <i class="fa-solid fa-trash-can mr-1"></i> Clear Results
-          </button>
-        </div>
-      </div>
-
-      <!-- Admin Category Analytics Grid -->
-      <div id="admin-analytics-grid" class="space-y-6">
-        <!-- Dynamic Tally Cards rendered here -->
-      </div>
-    </div>
-
-  </main>
-
-  <!-- REVIEW & SUBMIT MODAL -->
-  <div id="review-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden transform transition-all">
-      <!-- Header -->
-      <div class="px-6 py-4 bg-slate-900 text-white flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-clipboard-check text-brand-400 text-lg"></i>
-          <h3 class="font-bold text-lg">Review Your Preferences</h3>
-        </div>
-        <button onclick="closeReviewModal()" class="text-slate-400 hover:text-white transition">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-
-      <!-- Content -->
-      <div class="p-6 overflow-y-auto flex-1 space-y-4" id="review-modal-content">
-        <!-- Populated dynamically -->
-      </div>
-
-      <!-- Footer -->
-      <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-        <button onclick="closeReviewModal()" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition">
-          Continue Editing
-        </button>
-        <button id="final-submit-btn" onclick="submitSurvey()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-md transition flex items-center space-x-2">
-          <i class="fa-solid fa-paper-plane text-xs"></i>
-          <span>Confirm & Submit</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SUCCESS CONFIRMATION MODAL -->
-  <div id="success-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-8 text-center shadow-2xl transform transition-all">
-      <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4">
-        <i class="fa-solid fa-circle-check"></i>
-      </div>
-      <h3 class="text-2xl font-bold text-slate-900">Thank You!</h3>
-      <p class="text-sm text-slate-600 mt-2">
-        Your preferences have been recorded. You can view real-time associate choices on the Live Dashboard!
-      </p>
-      <div class="mt-6 flex flex-col gap-2">
-        <button onclick="closeSuccessModal(); switchView('admin');" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition">
-          View Live Results Dashboard
-        </button>
-        <button onclick="closeSuccessModal(); resetCurrentSurveyForm();" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition text-sm">
-          Submit Another Response
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Master Product Catalog across 8 Categories
-    const SURVEY_DATA = [
-      {
-        id: "beverage",
-        name: "Beverage",
-        icon: "fa-bottle-water",
-        color: "blue",
-        description: "Energy drinks, sparkling waters, sodas & fusions",
-        items: [
-          "Red Bull Energy Drink (8.4oz)", "Red Bull Sugarfree", "Monster Energy Original",
-          "Poppi Sparkling Prebiotic Soda - Raspberry Rose", "Poppi Doc Pop",
-          "Lipton Ice Tea Green Tea", "Lipton Peach Tea", "Celsius Sparkling Orange",
-          "Celsius Fuji Apple Pear", "LaCroix Lime Sparkling Water", "Spindrift Grapefruit",
-          "Gatorade Cool Blue (20oz)", "Gatorade Fruit Punch", "Vitaminwater Dragonfruit",
-          "Starbucks Frappuccino Vanilla", "Dunkin Iced Coffee Original", "Coca-Cola Zero Sugar",
-          "Diet Coke", "Sprite Lemon-Lime", "Dr Pepper Original"
-        ]
-      },
-      {
-        id: "candy",
-        name: "Candy",
-        icon: "fa-candy-cane",
-        color: "pink",
-        description: "Gummies, chocolates, beef jerky & sweet snacks",
-        items: [
-          "Gushers Fruit Flavored Snacks", "Jack Link's Beef Stick Original", "Jack Link's Teriyaki Stix",
-          "Wonderful Pistachios Roasted & Salted", "Reese's Peanut Butter Cups", "Snickers Original",
-          "M&M's Peanut", "Twix Caramel Cookie Bar", "Haribo Goldbears Gummies",
-          "Skittles Original", "Sour Patch Kids", "Starburst Original",
-          "Hershey's Milk Chocolate", "Kit Kat Wafer Bar", "Milky Way Bar",
-          "Swedish Fish", "Planters Salted Peanuts", "Slim Jim Giant Original"
-        ]
-      },
-      {
-        id: "coffee",
-        name: "Coffee",
-        icon: "fa-mug-hot",
-        color: "amber",
-        description: "Baronet pods, roasted blends, teas & hot cocoa",
-        items: [
-          "Baronet Hazelnut Pods", "Baronet Donut Shop Roast", "Baronet French Roast",
-          "Baronet Decaf Blend", "Baronet Earl Grey Tea", "Baronet Green Tea", "Baronet Chamomile",
-          "Starbucks Pike Place Pods", "Peet's Major Dickason Blend", "Swiss Miss Hot Cocoa",
-          "Lipton Black Tea Pods", "Chai Latte Mix", "French Vanilla Cappuccino"
-        ]
-      },
-      {
-        id: "food-cooler",
-        name: "Food Cooler",
-        icon: "fa-temperature-arrow-down",
-        color: "teal",
-        description: "Greek yogurts, protein shakes, cold brew lattes & salads",
-        items: [
-          "Oikos Triple Zero Greek Yogurt - Vanilla", "Oikos Greek Yogurt - Strawberry",
-          "Chobani Flip Key Lime Crumble", "LaColombe Draft Latte Triple", "LaColombe Mocha Latte",
-          "Fairlife Core Power Protein Shake 26g", "Premier Protein Chocolate",
-          "Sabra Hummus & Pretzel Snacks", "Sargento Balanced Breaks Cheese/Nuts",
-          "Hard Boiled Eggs 2-Pack", "Fresh Fruit Cup - Mixed Berry", "String Cheese Sticks (2-pack)"
-        ]
-      },
-      {
-        id: "freezer",
-        name: "Freezer",
-        icon: "fa-snowflake",
-        color: "cyan",
-        description: "Uncrustables, hot breakfast sandwiches & ice cream",
-        items: [
-          "Smucker's Uncrustables Peanut Butter & Grape Jelly", "Smucker's Uncrustables Strawberry",
-          "Jimmy Dean Sausage Egg & Cheese Biscuit", "Jimmy Dean Bacon Egg & Cheese Muffin",
-          "Hot Pockets Pepperoni Pizza", "Hot Pockets Ham & Cheddar",
-          "Haagen-Dazs Vanilla Milk Chocolate Bar", "Snickers Ice Cream Bar",
-          "Klondike Original Ice Cream Bar", "Hot Pocket Philly Cheesesteak"
-        ]
-      },
-      {
-        id: "sandwich",
-        name: "Sandwich",
-        icon: "fa-sandwich",
-        color: "orange",
-        description: "Fresh wraps, cold cut subs, paninis & specialty breads",
-        items: [
-          "Artisan Turkey & Swiss Wrap", "Chicken Caesar Wrap", "Buffalo Chicken Wrap",
-          "Classic Ham & Cheddar on Rye", "Roast Beef & Horseradish Sub", "Italian Combo Hero",
-          "Bacon Egg & Cheese Breakfast Burrito", "Sausage & Egg Croissant", "Caprese Mozzarella & Tomato Panini",
-          "Grilled Chicken Club Sandwich", "Chipotle Turkey Ciabatta", "Veggie Avocado Hummus Wrap"
-        ]
-      },
-      {
-        id: "snack",
-        name: "Snack",
-        icon: "fa-cookie-bite",
-        color: "red",
-        description: "Chips, pretzels, nuts & high-protein nutrition bars",
-        items: [
-          "Lay's Classic Potato Chips", "Lay's Barbecue", "Doritos Nacho Cheese",
-          "Doritos Cool Ranch", "Cheetos Crunchy", "Barebells Cookies & Cream Protein Bar",
-          "Barebells Salty Peanut", "Rold Gold Pretzel Twists", "Smartfood White Cheddar Popcorn",
-          "Snyder's Honey Mustard Pretzel Pieces", "Pringles Original", "QUEST Protein Bar - Chocolate Chip Cookie Dough"
-        ]
-      },
-      {
-        id: "sub-specialty",
-        name: "Sub / Specialty",
-        icon: "fa-star",
-        color: "purple",
-        description: "Bodyarmor, special clusters, mints & premium treats",
-        items: [
-          "Bodyarmor Sparkling Water - Orange Mango", "Bodyarmor Lyte Sports Drink",
-          "Lifesavers Wint-O-Green Mints", "Kind Dark Chocolate Almond Clusters",
-          "Kind Peanut Butter Whole Grain Bars", "Tic Tac Freshmints",
-          "Altoids Peppermint Mints", "Clif Bar Chocolate Chip", "Nature Valley Oats & Honey Bars"
-        ]
-      }
-    ];
-
-    // State Management
-    let userSelections = {}; // Structure: { categoryId: Set(itemName1, itemName2) }
-    let tallyData = {}; // Structure: { categoryId: { itemName: count } }
-    let totalResponses = 0;
-    let activeTab = "all";
-
-    // Initialize State & Storage
-    function init() {
-      // Initialize empty selection sets for each category
-      SURVEY_DATA.forEach(cat => {
-        userSelections[cat.id] = new Set();
-      });
-
-      // Load saved tally data from localStorage if present
-      loadTallyData();
-
-      // Render survey interface components
-      renderCategoryTabs();
-      renderSurveyCategories();
-      updateSelectionCounts();
-      renderAdminDashboard();
-    }
-
-    // Load or initialize localStorage
-    function loadTallyData() {
-      const stored = localStorage.getItem("mini_mart_survey_results");
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          tallyData = parsed.tallyData || {};
-          totalResponses = parsed.totalResponses || 0;
-        } catch (e) {
-          console.error("Error reading saved survey data:", e);
-          resetTallyDataStructure();
-        }
-      } else {
-        resetTallyDataStructure();
-      }
-    }
-
-    function resetTallyDataStructure() {
-      tallyData = {};
-      totalResponses = 0;
-      SURVEY_DATA.forEach(cat => {
-        tallyData[cat.id] = {};
-        cat.items.forEach(item => {
-          tallyData[cat.id][item] = 0;
-        });
-      });
-      saveTallyData();
-    }
-
-    function saveTallyData() {
-      localStorage.setItem("mini_mart_survey_results", JSON.stringify({
-        totalResponses: totalResponses,
-        tallyData: tallyData
-      }));
-    }
-
-    // Render Category Tabs for top filtering
-    function renderCategoryTabs() {
-      const container = document.getElementById("category-tabs");
-      let html = `
-        <button onclick="filterCategoryTab('all')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition whitespace-nowrap ${activeTab === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}">
-          All Categories (8)
-        </button>
-      `;
-
-      SURVEY_DATA.forEach(cat => {
-        const isSelected = activeTab === cat.id;
-        html += `
-          <button onclick="filterCategoryTab('${cat.id}')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition whitespace-nowrap flex items-center space-x-1.5 ${isSelected ? 'bg-white text-slate-900 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'}">
-            <span>${cat.name}</span>
-            <span id="tab-badge-${cat.id}" class="hidden text-[10px] px-1.5 py-0.2 rounded-full bg-brand-500 text-white font-bold">0</span>
-          </button>
-        `;
-      });
-
-      container.innerHTML = html;
-    }
-
-    // Switch Category Tab Filter
-    function filterCategoryTab(catId) {
-      activeTab = catId;
-      renderCategoryTabs();
-      
-      const sections = document.querySelectorAll(".category-card");
-      sections.forEach(sec => {
-        if (catId === "all" || sec.id === `card-${catId}`) {
-          sec.classList.remove("hidden");
-        } else {
-          sec.classList.add("hidden");
-        }
-      });
-    }
-
-    // Render Survey Category Cards and Checkboxes
-    function renderSurveyCategories() {
-      const container = document.getElementById("categories-container");
-      container.innerHTML = "";
-
-      SURVEY_DATA.forEach(cat => {
-        const card = document.createElement("div");
-        card.id = `card-${cat.id}`;
-        card.className = "category-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm transition-all";
-
-        const selectedCount = userSelections[cat.id].size;
-
-        card.innerHTML = `
-          <!-- Category Header -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-slate-100 gap-2">
+    <header class="bg-white shadow-sm sticky top-0 z-30">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
             <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 rounded-xl bg-${cat.color}-50 text-${cat.color}-600 flex items-center justify-center text-lg font-bold">
-                <i class="fa-solid ${cat.icon}"></i>
-              </div>
-              <div>
-                <div class="flex items-center space-x-2">
-                  <h3 class="font-bold text-slate-900 text-lg">${cat.name}</h3>
-                  <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium">${cat.items.length} options</span>
+                <div class="bg-brand-600 text-white p-2.5 rounded-xl shadow-md">
+                    <i class="fa-solid fa-store text-xl"></i>
                 </div>
-                <p class="text-xs text-slate-500 mt-0.5">${cat.description}</p>
-              </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900">Mini Mart Associate Survey</h1>
+                    <p class="text-xs text-slate-500">Pick up to 3 favorites per category</p>
+                </div>
             </div>
-
-            <!-- Limit Counter Badge -->
-            <div class="flex items-center space-x-2 self-start sm:self-auto">
-              <span class="text-xs font-semibold text-slate-500">Selected:</span>
-              <span id="counter-${cat.id}" class="text-xs font-bold px-3 py-1 rounded-full border ${
-                selectedCount === 3 
-                  ? 'bg-amber-50 text-amber-700 border-amber-200' 
-                  : 'bg-slate-100 text-slate-700 border-slate-200'
-              }">
-                ${selectedCount} / 3 Max
-              </span>
+            <div class="flex items-center space-x-2 bg-slate-100 p-1 rounded-xl">
+                <button id="nav-survey" onclick="switchView('survey')" class="px-4 py-2 text-sm font-medium rounded-lg bg-white text-brand-700 shadow-sm transition">
+                    <i class="fa-solid fa-square-poll-horizontal mr-1.5"></i> Take Survey
+                </button>
+                <button id="nav-admin" onclick="switchView('admin')" class="px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+                    <i class="fa-solid fa-chart-pie mr-1.5"></i> Admin Dashboard
+                </button>
             </div>
-          </div>
+        </div>
+    </header>
 
-          <!-- Items Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5" id="items-grid-${cat.id}">
-            ${renderItemCheckboxes(cat)}
-          </div>
-        `;
-
-        container.appendChild(card);
-      });
-    }
-
-    // Helper to generate checkboxes for a category
-    function renderItemCheckboxes(category) {
-      const selectedSet = userSelections[category.id];
-      const isMaxReached = selectedSet.size >= 3;
-
-      return category.items.map((item, idx) => {
-        const isChecked = selectedSet.has(item);
-        const isDisabled = isMaxReached && !isChecked;
-
-        return `
-          <label id="label-${category.id}-${idx}" 
-            class="item-label flex items-start p-3 rounded-xl border transition-all cursor-pointer ${
-              isChecked 
-                ? 'bg-brand-50/80 border-brand-500 ring-1 ring-brand-500 text-slate-900' 
-                : isDisabled 
-                  ? 'bg-slate-50 border-slate-200 opacity-50 cursor-not-allowed text-slate-400' 
-                  : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700 hover:bg-slate-50'
-            }">
-            <div class="flex items-center h-5 mt-0.5">
-              <input type="checkbox" 
-                value="${escapeHtml(item)}" 
-                ${isChecked ? 'checked' : ''} 
-                ${isDisabled ? 'disabled' : ''}
-                onchange="toggleItemSelection('${category.id}', '${escapeJsQuotes(item)}', this)"
-                class="w-4 h-4 text-brand-600 border-slate-300 rounded focus:ring-brand-500 cursor-pointer disabled:cursor-not-allowed">
-            </div>
-            <span class="ml-3 text-xs sm:text-sm font-medium leading-snug">${item}</span>
-          </label>
-        `;
-      }).join('');
-    }
-
-    // Handle Checkbox Toggle & Dynamic Limit Enforcement
-    function toggleItemSelection(catId, item, checkboxElem) {
-      const set = userSelections[catId];
-
-      if (checkboxElem.checked) {
-        if (set.size >= 3) {
-          // Enforce Max 3 Rule
-          checkboxElem.checked = false;
-          showToast(`Limit reached: You can only select up to 3 options in ${catId}.`, "warning");
-          return;
-        }
-        set.add(item);
-      } else {
-        set.delete(item);
-      }
-
-      // Re-render single category grid to update disabled states smoothly
-      const category = SURVEY_DATA.find(c => c.id === catId);
-      const grid = document.getElementById(`items-grid-${catId}`);
-      if (grid) {
-        grid.innerHTML = renderItemCheckboxes(category);
-      }
-
-      // Update Header Badge for Category
-      const count = set.size;
-      const counterBadge = document.getElementById(`counter-${catId}`);
-      if (counterBadge) {
-        counterBadge.innerText = `${count} / 3 Max`;
-        if (count === 3) {
-          counterBadge.className = "text-xs font-bold px-3 py-1 rounded-full border bg-amber-50 text-amber-700 border-amber-200";
-        } else {
-          counterBadge.className = "text-xs font-bold px-3 py-1 rounded-full border bg-slate-100 text-slate-700 border-slate-200";
-        }
-      }
-
-      // Update global UI badges
-      updateSelectionCounts();
-    }
-
-    // Update global total counters
-    function updateSelectionCounts() {
-      let total = 0;
-      SURVEY_DATA.forEach(cat => {
-        const count = userSelections[cat.id].size;
-        total += count;
-
-        // Tab badge
-        const tabBadge = document.getElementById(`tab-badge-${cat.id}`);
-        if (tabBadge) {
-          if (count > 0) {
-            tabBadge.innerText = count;
-            tabBadge.classList.remove("hidden");
-          } else {
-            tabBadge.classList.add("hidden");
-          }
-        }
-      });
-
-      document.getElementById("total-selected-badge").innerHTML = `${total} <span class="text-xs font-normal text-slate-500">items</span>`;
-      document.getElementById("bottom-selected-count").innerText = total;
-
-      const summaryText = document.getElementById("bottom-selection-summary");
-      if (total === 0) {
-        summaryText.innerText = "No items chosen yet";
-      } else {
-        summaryText.innerText = `${total} choices selected across categories`;
-      }
-    }
-
-    // Search Filter Logic
-    function handleSearch() {
-      const query = document.getElementById("search-input").value.toLowerCase().trim();
-      const clearBtn = document.getElementById("clear-search-btn");
-
-      if (query.length > 0) {
-        clearBtn.classList.remove("hidden");
-      } else {
-        clearBtn.classList.add("hidden");
-      }
-
-      // Filter category items
-      SURVEY_DATA.forEach(cat => {
-        const grid = document.getElementById(`items-grid-${cat.id}`);
-        if (!grid) return;
-
-        const labels = grid.querySelectorAll(".item-label");
-        let visibleCount = 0;
-
-        labels.forEach(label => {
-          const text = label.innerText.toLowerCase();
-          if (text.includes(query)) {
-            label.classList.remove("hidden");
-            visibleCount++;
-          } else {
-            label.classList.add("hidden");
-          }
-        });
-
-        // Hide entire card if query doesn't match category name or items
-        const card = document.getElementById(`card-${cat.id}`);
-        if (card && activeTab === 'all') {
-          if (visibleCount === 0 && !cat.name.toLowerCase().includes(query)) {
-            card.classList.add("hidden");
-          } else {
-            card.classList.remove("hidden");
-          }
-        }
-      });
-    }
-
-    function clearSearch() {
-      document.getElementById("search-input").value = "";
-      handleSearch();
-    }
-
-    // Open Review Modal
-    function openReviewModal() {
-      let total = 0;
-      SURVEY_DATA.forEach(c => total += userSelections[c.id].size);
-
-      if (total === 0) {
-        showToast("Please select at least 1 item before reviewing your survey.", "info");
-        return;
-      }
-
-      const modalContent = document.getElementById("review-modal-content");
-      let html = `<p class="text-sm text-slate-600 mb-4">Review your selected mini-mart choices below before submitting:</p>`;
-
-      SURVEY_DATA.forEach(cat => {
-        const set = userSelections[cat.id];
-        if (set.size > 0) {
-          html += `
-            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-bold text-sm text-slate-900 flex items-center space-x-2">
-                  <i class="fa-solid ${cat.icon} text-${cat.color}-600"></i>
-                  <span>${cat.name}</span>
-                </span>
-                <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-semibold">${set.size} / 3 selected</span>
-              </div>
-              <ul class="space-y-1 pl-6 list-disc text-xs sm:text-sm text-slate-700">
-                ${Array.from(set).map(item => `<li>${item}</li>`).join('')}
-              </ul>
-            </div>
-          `;
-        }
-      });
-
-      modalContent.innerHTML = html;
-      document.getElementById("review-modal").classList.remove("hidden");
-    }
-
-    function closeReviewModal() {
-      document.getElementById("review-modal").classList.add("hidden");
-    }
-
-    // Submit Survey & Save Results
-    function submitSurvey() {
-      // Record user choices into tallyData
-      SURVEY_DATA.forEach(cat => {
-        userSelections[cat.id].forEach(item => {
-          if (!tallyData[cat.id]) tallyData[cat.id] = {};
-          tallyData[cat.id][item] = (tallyData[cat.id][item] || 0) + 1;
-        });
-      });
-
-      totalResponses++;
-      saveTallyData();
-
-      closeReviewModal();
-      document.getElementById("success-modal").classList.remove("hidden");
-      renderAdminDashboard();
-    }
-
-    function closeSuccessModal() {
-      document.getElementById("success-modal").classList.add("hidden");
-    }
-
-    function resetCurrentSurveyForm() {
-      SURVEY_DATA.forEach(cat => {
-        userSelections[cat.id].clear();
-      });
-      document.getElementById("associate-id").value = "";
-      renderSurveyCategories();
-      updateSelectionCounts();
-    }
-
-    // Render Admin Analytics View
-    function renderAdminDashboard() {
-      document.getElementById("dash-total-responses").innerText = totalResponses;
-
-      let totalVotes = 0;
-      let totalItemCount = 0;
-
-      SURVEY_DATA.forEach(cat => {
-        totalItemCount += cat.items.length;
-        if (tallyData[cat.id]) {
-          Object.values(tallyData[cat.id]).forEach(cnt => totalVotes += cnt);
-        }
-      });
-
-      document.getElementById("dash-total-votes").innerText = totalVotes;
-      document.getElementById("dash-total-items").innerText = totalItemCount;
-
-      const grid = document.getElementById("admin-analytics-grid");
-      grid.innerHTML = "";
-
-      SURVEY_DATA.forEach(cat => {
-        const catTallies = tallyData[cat.id] || {};
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6">
         
-        // Sort items by vote count descending
-        const sortedItems = [...cat.items].sort((a, b) => {
-          return (catTallies[b] || 0) - (catTallies[a] || 0);
-        });
+        <!-- Toast Notification Box -->
+        <div id="toast" class="hidden mb-6 p-4 rounded-xl border flex items-center space-x-3 transition-all animate-fade-in shadow-sm">
+            <i id="toast-icon" class="fa-solid text-lg"></i>
+            <span id="toast-message" class="text-sm font-medium"></span>
+        </div>
 
-        // Find max votes in this category for progress bar percentage
-        const maxVotesInCat = Math.max(...Object.values(catTallies), 1);
-
-        const card = document.createElement("div");
-        card.className = "bg-white border border-slate-200 rounded-2xl p-5 shadow-sm";
-
-        let itemsHtml = sortedItems.map((item, index) => {
-          const count = catTallies[item] || 0;
-          const percentage = totalResponses > 0 ? Math.round((count / totalResponses) * 100) : 0;
-          const barWidth = Math.round((count / maxVotesInCat) * 100);
-
-          const isTop3 = index < 3 && count > 0;
-
-          return `
-            <div class="space-y-1">
-              <div class="flex items-center justify-between text-xs sm:text-sm">
-                <span class="font-medium text-slate-800 flex items-center space-x-2">
-                  ${isTop3 ? `<span class="w-5 h-5 rounded-full bg-amber-100 text-amber-700 font-bold text-[10px] flex items-center justify-center">#${index+1}</span>` : ''}
-                  <span>${item}</span>
-                </span>
-                <span class="font-bold text-slate-700">
-                  ${count} <span class="text-xs font-normal text-slate-400">(${percentage}%)</span>
-                </span>
-              </div>
-              <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-                <div class="${isTop3 ? 'bg-brand-500' : 'bg-slate-400'} h-full rounded-full transition-all duration-500" style="width: ${barWidth}%"></div>
-              </div>
+        <!-- SURVEY VIEW -->
+        <div id="view-survey" class="space-y-6">
+            <!-- Associate Info Card -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Associate Name / ID (Optional)</label>
+                    <input type="text" id="associate-name" placeholder="e.g. Alex Smith or ID #4029" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Store / Location</label>
+                    <input type="text" id="store-location" placeholder="e.g. Shoreline Hub #3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm bg-slate-50">
+                </div>
             </div>
-          `;
-        }).join('');
 
-        card.innerHTML = `
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-            <div class="flex items-center space-x-3">
-              <div class="w-9 h-9 rounded-xl bg-${cat.color}-50 text-${cat.color}-600 flex items-center justify-center font-bold">
-                <i class="fa-solid ${cat.icon}"></i>
-              </div>
-              <h3 class="font-bold text-slate-900">${cat.name}</h3>
+            <!-- Categories Container -->
+            <div id="categories-container" class="space-y-6">
+                <!-- Dynamically populated categories -->
             </div>
-            <span class="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg">
-              ${Object.values(catTallies).reduce((a, b) => a + b, 0)} Total Votes
-            </span>
-          </div>
-          <div class="space-y-3 max-h-80 overflow-y-auto pr-1">
-            ${itemsHtml}
-          </div>
-        `;
 
-        grid.appendChild(card);
-      });
-    }
+            <!-- Submit Section -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 sticky bottom-4 z-20">
+                <div>
+                    <h3 class="font-bold text-slate-900">Ready to submit your preferences?</h3>
+                    <p class="text-xs text-slate-500">Your vote helps optimize our breakroom micro-market inventory.</p>
+                </div>
+                <button onclick="submitSurvey()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-brand-500/20 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Submit Preferences</span>
+                </button>
+            </div>
+        </div>
 
-    // View Switching (Survey vs Admin)
-    function switchView(view) {
-      const surveyView = document.getElementById("survey-view");
-      const adminView = document.getElementById("admin-view");
-      const surveyBtn = document.getElementById("view-survey-btn");
-      const adminBtn = document.getElementById("view-admin-btn");
+        <!-- ADMIN DASHBOARD VIEW -->
+        <div id="view-admin" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Live Response Dashboard</h2>
+                    <p class="text-sm text-slate-500">Real-time cloud aggregation of all submitted associate votes.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span id="total-responses-badge" class="bg-brand-50 text-brand-700 px-4 py-2 rounded-xl text-sm font-bold border border-brand-100">
+                        0 Total Submissions
+                    </span>
+                    <button onclick="exportCSV()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2 rounded-xl shadow transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Export CSV</span>
+                    </button>
+                </div>
+            </div>
 
-      if (view === 'survey') {
-        surveyView.classList.remove("hidden");
-        adminView.classList.add("hidden");
-        
-        surveyBtn.className = "px-3.5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center space-x-2 bg-brand-50 text-brand-700 border border-brand-200";
-        adminBtn.className = "px-3.5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center space-x-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent";
-      } else {
-        surveyView.classList.add("hidden");
-        adminView.classList.remove("hidden");
+            <!-- Admin Category Breakdown -->
+            <div id="admin-analytics-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated analytics -->
+            </div>
+        </div>
 
-        adminBtn.className = "px-3.5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center space-x-2 bg-brand-50 text-brand-700 border border-brand-200";
-        surveyBtn.className = "px-3.5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center space-x-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent";
-        
-        renderAdminDashboard();
-      }
-    }
+    </main>
 
-    // Admin Tools: Demo Data Injection
-    function injectSampleData() {
-      SURVEY_DATA.forEach(cat => {
-        cat.items.forEach(item => {
-          if (!tallyData[cat.id]) tallyData[cat.id] = {};
-          // Random 1 to 15 votes per item
-          const randomVotes = Math.floor(Math.random() * 15) + 1;
-          tallyData[cat.id][item] = (tallyData[cat.id][item] || 0) + randomVotes;
-        });
-      });
+    <footer class="bg-white border-t border-slate-100 mt-12 py-6">
+        <div class="max-w-5xl mx-auto px-4 text-center text-xs text-slate-400">
+            Mini-Mart Stocking Preference Survey &bull; Powered by Firebase Cloud Database
+        </div>
+    </footer>
 
-      totalResponses += 12;
-      saveTallyData();
-      renderAdminDashboard();
-      showToast("Added sample demo votes to dashboard!", "success");
-    }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Admin Tools: Confirm Reset
-    function confirmResetData() {
-      if (confirm("Are you sure you want to clear all survey results? This cannot be undone.")) {
-        resetTallyDataStructure();
-        renderAdminDashboard();
-        showToast("Survey results have been reset.", "info");
-      }
-    }
+        // Your exact Firebase configuration keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyDm5PRr23NL_oowDPq3cuXZLpLW4ZqACec",
+            authDomain: "mini-mart-survey.firebaseapp.com",
+            projectId: "mini-mart-survey",
+            storageBucket: "mini-mart-survey.firebasestorage.app",
+            messagingSenderId: "650729051390",
+            appId: "1:650729051390:web:ac5b3d7106ef160b2901af"
+        };
 
-    // Admin Tools: Export Results as CSV
-    function exportCSV() {
-      let csvContent = "data:text/csv;charset=utf-8,Category,Item Name,Total Votes,Percentage of Respondents\n";
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mini-mart-survey-app';
 
-      SURVEY_DATA.forEach(cat => {
-        const catTallies = tallyData[cat.id] || {};
-        cat.items.forEach(item => {
-          const count = catTallies[item] || 0;
-          const pct = totalResponses > 0 ? ((count / totalResponses) * 100).toFixed(1) : "0.0";
-          csvContent += `"${cat.name}","${item.replace(/"/g, '""')}",${count},${pct}%\n`;
-        });
-      });
+        // Initialize Firebase
+        let app, db, auth, currentUser = null;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            // Attempt anonymous auth silently without blocking database operations
+            signInAnonymously(auth).then(() => {
+                console.log("Firebase signed in anonymously");
+            }).catch(err => {
+                console.warn("Firebase Auth bypassed or not enabled in console:", err);
+            });
 
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "mini_mart_survey_tallies.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+            });
 
-    // Custom Toast Notification Helper
-    function showToast(message, type = "info") {
-      const toast = document.createElement("div");
-      let bg = "bg-slate-900 text-white";
-      if (type === "warning") bg = "bg-amber-600 text-white";
-      if (type === "success") bg = "bg-brand-600 text-white";
+            // Enable real-time sync with database directly
+            initRealtimeSync();
+        } catch (e) {
+            console.error("Firebase init failed:", e);
+        }
 
-      toast.className = `fixed top-20 right-4 z-50 px-4 py-3 rounded-xl shadow-xl font-medium text-sm ${bg} transition-all duration-300 transform translate-y-0`;
-      toast.innerText = message;
+        // Survey Categories & Items Definition
+        const surveyCategories = [
+            { id: 'beverage', name: 'Beverage & Energy Drinks', icon: 'fa-bottle-water', items: ['Coca-Cola', 'Diet Coke', 'Sprite', 'Dr Pepper', 'Monster Energy', 'Red Bull', 'Gatorade', 'Sparkling Water'] },
+            { id: 'candy', name: 'Candy & Sweets', icon: 'fa-cookie-bite', items: ['Snickers Bar', 'Reese’s Peanut Butter Cups', 'Skittles', 'M&M’s Milk Chocolate', 'Sour Patch Kids', 'Twix', 'KitKat'] },
+            { id: 'coffee', name: 'Coffee & Caffeinated Drinks', icon: 'fa-mug-hot', items: ['Iced Caramel Latte', 'Cold Brew Black', 'Vanilla Cappuccino', 'Mocha Frappe', 'Hot Brew Regular', 'Matcha Latte'] },
+            { id: 'cooler', name: 'Food Cooler Items', icon: 'fa-apple-whole', items: ['Greek Yogurt Parfait', 'Fresh Fruit Cup', 'Veggie & Ranch Tray', 'Cheese & Crackers Snack Pack', 'Hard-Boiled Eggs', 'Garden Salad Bowl'] },
+            { id: 'freezer', name: 'Freezer Meals & Treats', icon: 'fa-snowflake', items: ['Bean & Cheese Burrito', 'Pepperoni Pizza Bagels', 'Ice Cream Sandwich', 'Breakfast Sausage Sandwich', 'Chicken Pot Pie', 'Waffle Bites'] },
+            { id: 'sandwich', name: 'Fresh Sandwiches & Wraps', icon: 'fa-burger', items: ['Turkey & Swiss on Wheat', 'Ham & Cheddar Croissant', 'Roast Beef & Provolone', 'Chicken Salad Wrap', 'Classic Club Sandwich', 'Veggie Hummus Wrap'] },
+            { id: 'snack', name: 'Chips & Dry Snacks', icon: 'fa-bag-shopping', items: ['Lay’s Classic Potato Chips', 'Doritos Nacho Cheese', 'Pretzel Crisps', 'White Cheddar Popcorn', 'Beef Jerky Original', 'Mixed Almonds & Cashews', 'Granola Bar'] },
+            { id: 'sub', name: 'Sub Sandwiches', icon: 'fa-bread-slice', items: ['Italian Sub', 'Meatball Marinara Sub', 'Turkey Bacon Ranch Sub', 'Philly Cheesesteak Sub', 'Tuna Salad Sub', 'Veggie Supreme Sub'] }
+        ];
 
-      document.body.appendChild(toast);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
-    }
+        // State storage for user selections
+        const userSelections = {};
+        surveyCategories.forEach(cat => userSelections[cat.id] = []);
 
-    // Escaping Utility Helpers
- function escapeHtml(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-    }
-    function escapeJsQuotes(str) {
-      return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
-    }
+        let allSubmissions = [];
 
-    // Initialize application on page load
-    window.onload = function() {
-      init();
-    };
-  </script>
+        window.switchView = function(viewName) {
+            const surveyView = document.getElementById('view-survey');
+            const adminView = document.getElementById('view-admin');
+            const navSurvey = document.getElementById('nav-survey');
+            const navAdmin = document.getElementById('nav-admin');
+
+            if (viewName === 'survey') {
+                surveyView.classList.remove('hidden');
+                adminView.classList.add('hidden');
+                navSurvey.className = "px-4 py-2 text-sm font-medium rounded-lg bg-white text-brand-700 shadow-sm transition";
+                navAdmin.className = "px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
+            } else {
+                surveyView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+                navAdmin.className = "px-4 py-2 text-sm font-medium rounded-lg bg-white text-brand-700 shadow-sm transition";
+                navSurvey.className = "px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
+                renderAdminAnalytics();
+            }
+        };
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            const iconEl = document.getElementById('toast-icon');
+
+            msgEl.textContent = message;
+            toast.className = `mb-6 p-4 rounded-xl border flex items-center space-x-3 transition-all animate-fade-in shadow-sm ${
+                type === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-850'
+            }`;
+            iconEl.className = `fa-solid text-lg ${type === 'success' ? 'fa-circle-check text-emerald-600' : 'fa-triangle-exclamation text-amber-600'}`;
+            toast.classList.remove('hidden');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Render Survey UI
+        function renderSurvey() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = '';
+
+            surveyCategories.forEach(cat => {
+                const count = userSelections[cat.id].length;
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-6 shadow-sm border border-slate-100";
+                
+                let itemsHtml = '';
+                cat.items.forEach(item => {
+                    const isSelected = userSelections[cat.id].includes(item);
+                    itemsHtml += `
+                        <button type="button" onclick="toggleItem('${cat.id}', '${item.replace(/'/g, "\\'")}')" 
+                            class="px-4 py-2.5 rounded-xl text-sm font-medium border text-left transition flex items-center justify-between ${
+                                isSelected 
+                                    ? 'bg-brand-50 border-brand-500 text-brand-900 shadow-sm' 
+                                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                            }">
+                            <span>${item}</span>
+                            <i class="fa-solid ${isSelected ? 'fa-circle-check text-brand-600' : 'fa-circle text-slate-300 text-xs'}"></i>
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">
+                                <i class="fa-solid ${cat.icon}"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900">${cat.name}</h3>
+                                <p class="text-xs text-slate-400">Select up to 3 favorites</p>
+                            </div>
+                        </div>
+                        <span id="counter-${cat.id}" class="text-xs font-semibold px-3 py-1 rounded-full ${count === 3 ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
+                            ${count} / 3 selected
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        ${itemsHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.toggleItem = function(categoryId, itemName) {
+            const list = userSelections[categoryId];
+            const index = list.indexOf(itemName);
+
+            if (index > -1) {
+                list.splice(index, 1);
+            } else {
+                if (list.length >= 3) {
+                    showToast(`You can select a maximum of 3 items for ${surveyCategories.find(c => c.id === categoryId).name}.`, 'warning');
+                    return;
+                }
+                list.push(itemName);
+            }
+            renderSurvey();
+        };
+
+        window.submitSurvey = async function() {
+            const name = document.getElementById('associate-name').value.trim();
+            const location = document.getElementById('store-location').value.trim();
+
+            const totalSelections = Object.values(userSelections).reduce((sum, arr) => sum + arr.length, 0);
+            if (totalSelections === 0) {
+                showToast("Please select at least one item before submitting.", 'warning');
+                return;
+            }
+
+            if (!db) {
+                showToast("Database connection unavailable. Please check internet connection.", 'warning');
+                return;
+            }
+
+            const payload = {
+                associateName: name || 'Anonymous Associate',
+                storeLocation: location || 'Main Facility',
+                selections: userSelections,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'submissions');
+                await addDoc(colRef, payload);
+                
+                showToast("Survey submitted successfully! Thank you for your feedback.", 'success');
+                
+                // Reset selections
+                surveyCategories.forEach(cat => userSelections[cat.id] = []);
+                document.getElementById('associate-name').value = '';
+                document.getElementById('store-location').value = '';
+                renderSurvey();
+            } catch (err) {
+                console.error("Submission error:", err);
+                showToast("Failed to submit survey. Please check connection.", 'warning');
+            }
+        };
+
+        function initRealtimeSync() {
+            if (!db) return;
+            const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'submissions');
+            
+            onSnapshot(colRef, (snapshot) => {
+                allSubmissions = [];
+                snapshot.forEach(docSnap => {
+                    allSubmissions.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                document.getElementById('total-responses-badge').textContent = `${allSubmissions.length} Total Submissions`;
+                if (!document.getElementById('view-admin').classList.contains('hidden')) {
+                    renderAdminAnalytics();
+                }
+            }, (error) => {
+                console.error("Firestore snapshot error:", error);
+            });
+        }
+
+        function renderAdminAnalytics() {
+            const container = document.getElementById('admin-analytics-container');
+            container.innerHTML = '';
+
+            surveyCategories.forEach(cat => {
+                // Tally frequencies for this category
+                const tallies = {};
+                cat.items.forEach(item => tallies[item] = 0);
+
+                allSubmissions.forEach(sub => {
+                    if (sub.selections && sub.selections[cat.id]) {
+                        sub.selections[cat.id].forEach(item => {
+                            if (tallies[item] !== undefined) tallies[item]++;
+                            else tallies[item] = 1;
+                        });
+                    }
+                });
+
+                // Sort items by vote count descending
+                const sortedItems = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
+                const maxVotes = sortedItems.length > 0 ? Math.max(...sortedItems.map(i => i[1]), 1) : 1;
+
+                let barsHtml = '';
+                sortedItems.forEach(([item, count]) => {
+                    const percentage = Math.round((count / Math.max(allSubmissions.length, 1)) * 100);
+                    barsHtml += `
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-medium text-slate-700">
+                                <span>${item}</span>
+                                <span class="font-bold text-brand-600">${count} votes (${percentage}%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-2.5 rounded-full transition-all duration-500" style="width: ${Math.min(percentage, 100)}%;"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4";
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                        <div class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">
+                            <i class="fa-solid ${cat.icon}"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900">${cat.name}</h3>
+                    </div>
+                    <div class="space-y-3">
+                        ${barsHtml || '<p class="text-xs text-slate-400 italic">No votes recorded yet.</p>'}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.exportCSV = function() {
+            if (allSubmissions.length === 0) {
+                showToast("No submission data available to export.", 'warning');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,SubmissionID,AssociateName,StoreLocation,Timestamp,Category,Item\n";
+            
+            allSubmissions.forEach(sub => {
+                Object.entries(sub.selections || {}).forEach(([catId, items]) => {
+                    items.forEach(item => {
+                        const row = [
+                            sub.id,
+                            `"${sub.associateName || ''}"`,
+                            `"${sub.storeLocation || ''}"`,
+                            sub.timestamp || '',
+                            catId,
+                            `"${item}"`
+                        ].join(",");
+                        csvContent += row + "\r\n";
+                    });
+                });
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `mini_mart_survey_export_${new Date().toISOString().slice(0,10)}.
+            csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("CSV export downloaded successfully!", 'success');
+        };
+
+        // Initial render on load
+        renderSurvey();
+    </script>
 </body>
 </html>
